@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0f1c;
+  --foreground: #eaf2ff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+::selection {
+  background: rgba(124, 92, 255, 0.35);
+  color: rgba(234, 242, 255, 0.98);
+}
+
+@keyframes moview-float {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes moview-cursor {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes moview-dot {
+  0% {
+    opacity: 0.25;
+    transform: translateY(0px);
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  70% {
+    opacity: 0.4;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0.25;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes moview-pop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0px, 0);
+  }
+}
+
+.moview-hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.moview-hide-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
