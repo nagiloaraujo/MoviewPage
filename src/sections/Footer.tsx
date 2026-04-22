@@ -9,8 +9,8 @@ export default function Footer() {
           <div className="grid gap-5">
             <MoviewLogo className="flex items-center gap-3" />
             <p className="max-w-sm text-sm leading-6 text-white/55">
-              IA que movimenta resultados. Transformamos atendimento em receita com inteligência artificial, automação e
-              mídia digital integrada.
+              A Moview conecta IA, automação e mídia para fabricantes, distribuidores e revendas especializadas
+              venderem com mais contexto, velocidade e previsibilidade.
             </p>
 
             <div className="flex items-center gap-3">
@@ -81,7 +81,7 @@ export default function Footer() {
                 Sobre nós
               </a>
               <a className="text-sm text-white/55 transition hover:text-white" href="#">
-                Cases de sucesso
+                Mercado especializado
               </a>
               <a className="text-sm text-white/55 transition hover:text-white" href="#">
                 Blog

@@ -57,7 +57,7 @@ export default function NarrativeShift() {
                   data-shift="a"
                   className="absolute inset-0 text-balance text-2xl font-semibold leading-tight text-white md:text-3xl"
                 >
-                  Empresas perdem clientes todos os dias...
+                  Operações comerciais complexas perdem orçamento, pedido e recompra todos os dias...
                 </p>
                 <p
                   data-shift="b"
@@ -75,8 +75,8 @@ export default function NarrativeShift() {
               </div>
 
               <p className="max-w-3xl text-pretty text-base leading-7 text-white/65">
-                Um fluxo contínuo que atrai, engaja, atende e converte — com automações que trabalham 24 horas e
-                aprendizado constante.
+                Da captação ao pós-venda: um fluxo contínuo para fabricantes, distribuidores e revendas
+                especializadas, com atendimento 24 horas, mídia orientada por intenção e aprendizado constante.
               </p>
             </div>
           </div>

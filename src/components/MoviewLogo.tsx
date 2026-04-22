@@ -16,6 +16,7 @@ export default function MoviewLogo({
         width={44}
         height={44}
         className="drop-shadow-[0_0_18px_rgba(120,155,255,0.25)]"
+        style={{ width: "44px", height: "auto" }}
         priority={false}
       />
 

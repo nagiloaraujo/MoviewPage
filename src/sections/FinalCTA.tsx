@@ -3,6 +3,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React, { useEffect, useRef } from "react";
+import { moviewWhatsAppHref } from "@/lib/whatsapp";
 
 export default function FinalCTA() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -44,33 +45,38 @@ export default function FinalCTA() {
                 CTA FINAL
               </p>
               <h3 data-cta="in" className="text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                Pronto para transformar seu atendimento em uma máquina de vendas?
+                Pronto para transformar sua operação em uma maquina de atendimento e demanda?
               </h3>
               <p data-cta="in" className="max-w-2xl text-pretty text-base leading-7 text-white/65">
-                Comece com um diagnóstico rápido e um plano de automação sob medida. Evolua com dados, não com achismo.
+                Comece com um diagnóstico rápido para identificar onde IA, automação e mídia podem acelerar orçamento,
+                recompra e relacionamento no seu setor.
               </p>
             </div>
 
             <div className="grid gap-3">
               <a
                 data-cta="in"
-                href="#"
+                href={moviewWhatsAppHref}
+                target="_blank"
+                rel="noreferrer"
                 className="relative inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-medium text-white transition-transform hover:scale-[1.02] active:scale-[0.99]"
               >
                 <span className="absolute inset-0 rounded-full bg-[linear-gradient(90deg,rgba(41,171,255,0.38),rgba(124,92,255,0.34),rgba(32,227,194,0.28))] blur-md" />
                 <span className="absolute inset-0 rounded-full border border-white/15 bg-white/5" />
-                <span className="relative">Quero começar agora</span>
+                <span className="relative">Quero falar com a Moview</span>
               </a>
               <a
                 data-cta="in"
-                href="#"
+                href={moviewWhatsAppHref}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-black/20 px-6 text-sm font-medium text-white/85 transition hover:bg-black/30 hover:text-white"
               >
                 Falar com especialista
               </a>
 
               <div data-cta="in" className="mt-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/65">
-                Resposta rápida · Integração com seus canais · Métricas e otimização contínua
+                Resposta rapida · Fluxos consultivos · Metricas, midia e otimizacao continua
               </div>
             </div>
           </div>

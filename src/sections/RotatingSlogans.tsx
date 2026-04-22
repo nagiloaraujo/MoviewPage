@@ -5,10 +5,10 @@ import React, { useEffect, useMemo, useState } from "react";
 export default function RotatingSlogans() {
   const slogans = useMemo(
     () => [
-      "Tecnologia que atende e vende",
-      "Automação que vende. Comunicação que escala",
-      "Sua empresa inteligente 24 horas",
-      "IA que movimenta resultados",
+      "IA e mídia para operações comerciais especializadas",
+      "Automação que vende. Atendimento que escala no seu mercado",
+      "Mais orçamento, mais recompra, mais contexto comercial",
+      "Moview: atendimento inteligente para jornadas consultivas",
     ],
     [],
   );
@@ -56,4 +56,3 @@ export default function RotatingSlogans() {
     </div>
   );
 }
-

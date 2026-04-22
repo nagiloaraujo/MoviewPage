@@ -20,6 +20,7 @@ function sleep(ms: number) {
 function TypingIndicator() {
   return (
     <div className="flex items-center gap-2">
+      <span className="text-[0.8125rem] font-medium tracking-[0.08em] text-white/72">digitando</span>
       <span className="inline-flex items-center gap-1">
         <span className="h-1.5 w-1.5 rounded-full bg-white/55 animate-[moview-dot_1.1s_infinite]" />
         <span className="h-1.5 w-1.5 rounded-full bg-white/55 animate-[moview-dot_1.1s_0.18s_infinite]" />
@@ -41,28 +42,25 @@ export default function ChatSim({
   allowInTest?: boolean;
   maxTurns?: number;
 }) {
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   const script = useMemo(
     () => [
       {
-        q: "Quero automatizar o WhatsApp. Por onde começo?",
-        a: "Comece com triagem + qualificação. Eu integro com seus canais e entrego um fluxo pronto para conversão.",
+        q: "Somos uma operação comercial técnica. Por onde a automação deve começar?",
+        a: "Comece por triagem comercial, catálogo no WhatsApp e qualificação de pedidos. Assim você ganha velocidade sem perder contexto.",
       },
       {
-        q: "Isso funciona com Instagram e site também?",
-        a: "Sim. Multicanal com contexto único: mensagens, intenção e histórico conectados.",
+        q: "Isso funciona com representantes, site e Instagram?",
+        a: "Sim. A operação fica unificada: canais, intenção, histórico e repasse comercial organizados em um só fluxo.",
       },
       {
-        q: "Quanto tempo para ver resultado?",
-        a: "Em geral, você percebe redução de tempo e aumento de respostas no primeiro ciclo. Depois otimizamos por dados.",
+        q: "Onde a Moview mais ajuda em jornadas consultivas?",
+        a: "Em atendimento, orçamento, recompra e mídia. A IA acelera resposta e a automação reduz gargalos do comercial.",
       },
       {
-        q: "Preciso de CRM para usar?",
-        a: "Não. Mas se você tiver, eu integro. Se não, criamos um pipeline leve para você acompanhar o funil.",
+        q: "Preciso trocar meu CRM para usar?",
+        a: "Não. Se você já usa CRM, integramos. Se não usa, a Moview organiza um fluxo leve para acompanhar pedidos e oportunidades.",
       },
     ],
     [],
@@ -72,7 +70,7 @@ export default function ChatSim({
     {
       id: "boot-ai",
       from: "ai",
-      text: "Olá! Sou a IA da Moview. Me diga seu objetivo e eu monto o fluxo ideal.",
+      text: "Olá! Sou a IA da Moview. Posso montar um fluxo ideal para sua operação comercial.",
     },
   ]);
   const [typing, setTyping] = useState(false);
@@ -82,11 +80,16 @@ export default function ChatSim({
   const stickToBottomRef = useRef(true);
 
   useEffect(() => {
+    setPrefersReducedMotion(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false);
+  }, []);
+
+  useEffect(() => {
     const el = viewportRef.current;
     if (!el) return;
 
     if (!stickToBottomRef.current) return;
 
+    // Keep the latest exchange visible without letting the outer panel grow.
     const top = el.scrollHeight;
     el.scrollTo({ top, behavior: prefersReducedMotion ? "auto" : "smooth" });
   }, [messages.length, prefersReducedMotion, typing]);
@@ -99,24 +102,24 @@ export default function ChatSim({
 
     const run = async () => {
       let i = 0;
-      await sleep(allowInTest ? 150 : 650);
+      await sleep(allowInTest ? 150 : 1200);
 
       while (!cancelled && (maxTurns == null || i < maxTurns)) {
         const pair = script[i % script.length];
 
-        await sleep(allowInTest ? 250 : rand(1100, 2100));
+        await sleep(allowInTest ? 250 : rand(2400, 3400));
         if (cancelled) return;
         setMessages((prev) => {
           const next = prev.concat({ id: `u-${Date.now()}-${i}`, from: "user", text: pair.q });
           return next.length > 10 ? next.slice(-10) : next;
         });
 
-        await sleep(allowInTest ? 180 : rand(450, 900));
+        await sleep(allowInTest ? 180 : rand(900, 1350));
         if (cancelled) return;
         setTyping(true);
         setStatus("typing");
 
-        await sleep(allowInTest ? 260 : rand(900, 1700));
+        await sleep(allowInTest ? 260 : rand(2200, 3200));
         if (cancelled) return;
         setTyping(false);
         setStatus("online");
@@ -136,17 +139,42 @@ export default function ChatSim({
     };
   }, [allowInTest, maxTurns, prefersReducedMotion, script, simulate]);
 
+  const renderBubble = (m: Msg, keyPrefix = "") => (
+    <div
+      key={`${keyPrefix}${m.id}`}
+      className={[
+        "moview-chat-bubble max-w-[92%] rounded-2xl border border-white/10 px-3 py-2 text-left text-sm text-white/85 transition-all duration-[1100ms]",
+        !prefersReducedMotion ? "animate-[moview-pop_1.9s_cubic-bezier(0.22,1,0.36,1)]" : "",
+        m.from === "ai" ? "bg-black/20" : "ml-auto bg-white/5 text-right",
+      ].join(" ")}
+    >
+      {m.text}
+    </div>
+  );
+
+  const renderTypingBubble = (key: string) => (
+    <div
+      key={key}
+      className={[
+        "moview-chat-bubble max-w-[70%] rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-left text-sm text-white/85 transition-all duration-[1100ms]",
+        !prefersReducedMotion ? "animate-[moview-pop_1.9s_cubic-bezier(0.22,1,0.36,1)]" : "",
+      ].join(" ")}
+    >
+      <TypingIndicator />
+    </div>
+  );
+
   return (
-    <div className={["flex h-full flex-col", className].filter(Boolean).join(" ")}>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
+    <div className={["flex h-full min-h-0 flex-col overflow-hidden", className].filter(Boolean).join(" ")}>
+      <div className="moview-chat-header flex flex-wrap items-center justify-between gap-2">
+        <div className="moview-chat-headerTitle flex min-w-0 items-center gap-2">
           <div className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5">
             <CpuChipIcon className="h-4 w-4 text-white/80" />
           </div>
           <div className="text-sm font-medium text-white/85">Chat em tempo real</div>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-white/60">
+        <div className="moview-chat-headerStatus flex items-center gap-2 text-xs text-white/60">
           <span
             className={[
               "h-2 w-2 rounded-full",
@@ -155,13 +183,13 @@ export default function ChatSim({
                 : "bg-[#20E3C2] shadow-[0_0_16px_rgba(32,227,194,0.55)]",
             ].join(" ")}
           />
-          <span>{status === "typing" ? "IA digitando" : "Online"}</span>
+          <span>{status === "typing" ? "IA digitando..." : "Online"}</span>
         </div>
       </div>
 
       <div
         ref={viewportRef}
-        className="moview-hide-scrollbar mt-3 flex-1 overscroll-contain overflow-y-auto rounded-2xl border border-white/10 bg-black/20 px-3 py-3"
+        className="moview-chat-viewport moview-hide-scrollbar mt-3 flex-1 overscroll-contain overflow-y-auto rounded-2xl border border-white/10 bg-black/20 px-3 py-3"
         onScroll={() => {
           const el = viewportRef.current;
           if (!el) return;
@@ -172,38 +200,17 @@ export default function ChatSim({
         onTouchMoveCapture={(e) => e.stopPropagation()}
       >
         <div className="grid gap-2">
-          {messages.map((m) => (
-            <div
-              key={m.id}
-              className={[
-                "max-w-[92%] rounded-2xl border border-white/10 px-3 py-2 text-sm text-white/85 transition-all duration-1000",
-                !prefersReducedMotion ? "animate-[moview-pop_1.2s_ease-out]" : "",
-                m.from === "ai" ? "bg-black/20" : "ml-auto bg-white/5 text-right",
-              ].join(" ")}
-            >
-              {m.text}
-            </div>
-          ))}
-
-          {typing ? (
-            <div
-              className={[
-                "max-w-[70%] rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white/85 transition-all duration-1000",
-                !prefersReducedMotion ? "animate-[moview-pop_1.2s_ease-out]" : "",
-              ].join(" ")}
-            >
-              <TypingIndicator />
-            </div>
-          ) : null}
+          {messages.map((m) => renderBubble(m))}
+          {typing ? renderTypingBubble("desktop-typing") : null}
         </div>
       </div>
 
       <div className="mt-3 flex items-center justify-between text-xs text-white/55">
         <div className="flex items-center gap-2">
           <ChatBubbleLeftRightIcon className="h-4 w-4 text-white/55" />
-          <span>Loop contínuo · Respostas variáveis</span>
+          <span>Fluxo consultivo · Respostas variaveis</span>
         </div>
-        <span>{status === "typing" ? "processando…" : "pronto"}</span>
+        <span>{status === "typing" ? "digitando..." : "pronto"}</span>
       </div>
     </div>
   );

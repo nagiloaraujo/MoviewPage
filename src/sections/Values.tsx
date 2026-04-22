@@ -4,10 +4,10 @@ import React from "react";
 import InfiniteCardsCarousel from "@/components/InfiniteCardsCarousel";
 
 const values = [
-  { title: "Missão", desc: "Transformar atendimento em resultado com IA e automação." },
-  { title: "Visão", desc: "Ser o padrão de atendimento inteligente e conversão contínua." },
-  { title: "Valores", desc: "Performance, clareza, velocidade e obsessão por experiência." },
-  { title: "Método", desc: "Dados → ação → aprendizado. Sempre em evolução." },
+  { title: "Missão", desc: "Transformar operações comerciais especializadas em resultado com IA, automação e mídia." },
+  { title: "Visão", desc: "Ser a principal escolha em automação de IA e mídia para mercados de alta complexidade comercial." },
+  { title: "Valores", desc: "Performance, clareza comercial, velocidade e obsessão por experiência." },
+  { title: "Método", desc: "Dados → ação → aprendizado aplicado à rotina real do nicho." },
 ];
 
 export default function Values() {
@@ -20,10 +20,11 @@ export default function Values() {
           <div className="relative">
             <p className="text-xs tracking-[0.28em] text-white/55">MOVIEW</p>
             <h3 className="mt-4 text-balance text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              Missão, visão e valores em movimento
+              Fundamentos que sustentam a Moview em mercados especializados
             </h3>
             <p className="mt-3 max-w-3xl text-pretty text-base leading-7 text-white/65">
-              Uma narrativa contínua também nos fundamentos: o que guiamos, como entregamos e como medimos.
+              Nossa proposta continua a mesma: unir IA, automação e mídia. O foco agora fica ainda mais claro para
+              operações com jornada técnica, comercial e consultiva.
             </p>
           </div>
 

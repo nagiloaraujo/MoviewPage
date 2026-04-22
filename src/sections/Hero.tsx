@@ -6,6 +6,7 @@ import Image from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLenis } from "@/components/SmoothScroll";
 import ChatSim from "@/components/ChatSim";
+import { moviewWhatsAppHref } from "@/lib/whatsapp";
 
 export default function Hero() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -14,23 +15,22 @@ export default function Hero() {
   const [videoOk, setVideoOk] = useState(true);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [isInView, setIsInView] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [shouldAvoidHeavyMedia, setShouldAvoidHeavyMedia] = useState(false);
 
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
-
-  const shouldAvoidHeavyMedia = useMemo(() => {
-    if (typeof window === "undefined") return false;
+  useEffect(() => {
     type NavigatorWithConnection = Navigator & {
       connection?: { saveData?: boolean; effectiveType?: string };
     };
+
     const conn = (navigator as NavigatorWithConnection).connection;
     const saveData = !!conn?.saveData;
     const effectiveType = (conn?.effectiveType ?? "").toLowerCase();
     const slow = effectiveType === "slow-2g" || effectiveType === "2g";
     const smallScreen = window.matchMedia?.("(max-width: 768px)")?.matches ?? false;
-    return saveData || slow || smallScreen;
+
+    setPrefersReducedMotion(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false);
+    setShouldAvoidHeavyMedia(saveData || slow || smallScreen);
   }, []);
 
   const videoEnabled = !prefersReducedMotion && !shouldAvoidHeavyMedia;
@@ -103,7 +103,8 @@ export default function Hero() {
       return;
     }
 
-    window.setTimeout(() => setVideoSrc("/hero-bg.mp4"), 200);
+    const t = window.setTimeout(() => setVideoSrc("/hero-bg.mp4"), 80);
+    return () => window.clearTimeout(t);
   }, [videoEnabled, videoOk, isInView]);
 
   useEffect(() => {
@@ -148,10 +149,11 @@ export default function Hero() {
             muted
             loop
             playsInline
-            preload="none"
+            preload="metadata"
             poster="/hero-fallback.svg"
             onError={() => setVideoOk(false)}
-            className="h-full w-full object-cover opacity-35"
+            suppressHydrationWarning
+            className="h-full w-full object-cover opacity-55"
             src={videoSrc ?? undefined}
           />
         ) : (
@@ -161,11 +163,11 @@ export default function Hero() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-35"
+            className="object-cover opacity-45"
           />
         )}
-        <div className="absolute inset-0 bg-[radial-gradient(900px_circle_at_18%_20%,rgba(41,171,255,0.16),transparent_55%),radial-gradient(820px_circle_at_82%_14%,rgba(162,62,255,0.14),transparent_52%),radial-gradient(900px_circle_at_60%_85%,rgba(32,227,194,0.10),transparent_56%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/75" />
+        <div className="absolute inset-0 bg-[radial-gradient(900px_circle_at_18%_20%,rgba(41,171,255,0.22),transparent_55%),radial-gradient(820px_circle_at_82%_14%,rgba(162,62,255,0.18),transparent_52%),radial-gradient(900px_circle_at_60%_85%,rgba(32,227,194,0.14),transparent_56%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/42 via-black/18 to-black/62" />
       </div>
 
       <div className="mx-auto max-w-6xl px-4">
@@ -176,31 +178,29 @@ export default function Hero() {
               data-hero="in"
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-[0.2em] text-white/75"
             >
-              IA · Automação · Mídia Digital
+              IA · Automação · Mídia especializada
             </p>
             <h1
               data-hero="in"
               className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-white md:text-6xl"
             >
-              IA que movimenta resultados
+              A melhor automação de IA e mídia de performance para fabricantes, distribuidores e revendas
             </h1>
             <p data-hero="in" className="mt-5 max-w-xl text-pretty text-lg leading-8 text-white/70">
-              A Moview transforma atendimento em resultado usando inteligência artificial, automação e mídia digital
-              integrada.
+              A Moview é a parceira ideal para operações comerciais técnicas que precisam automatizar atendimento,
+              comercial e mídia sem perder contexto, velocidade e profundidade em mercados de tintas e revestimentos.
             </p>
 
             <div data-hero="in" className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
-                href="#contato"
-                onClick={(e) => {
-                  e.preventDefault();
-                  goTo("#contato");
-                }}
+                href={moviewWhatsAppHref}
+                target="_blank"
+                rel="noreferrer"
                 className="relative inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-medium text-white transition-transform hover:scale-[1.02] active:scale-[0.99]"
               >
                 <span className="absolute inset-0 rounded-full bg-[linear-gradient(90deg,rgba(41,171,255,0.34),rgba(124,92,255,0.32),rgba(32,227,194,0.26))] blur-md" />
                 <span className="absolute inset-0 rounded-full border border-white/15 bg-white/5" />
-                <span className="relative">Quero automatizar meu atendimento</span>
+                <span className="relative">Quero levar IA para minha operação</span>
               </a>
               <a
                 href="#como-funciona"
@@ -225,28 +225,28 @@ export default function Hero() {
 
             <div
               data-hero="float"
-              className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-[0_0_80px_rgba(41,171,255,0.15)] backdrop-blur-xl md:h-[610px]"
+              className="moview-panel relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_0_80px_rgba(41,171,255,0.15)] backdrop-blur-xl md:h-[38rem]"
             >
               <div className="absolute -inset-12 opacity-70 blur-2xl bg-[radial-gradient(circle_at_20%_20%,rgba(41,171,255,0.40),transparent_60%),radial-gradient(circle_at_70%_30%,rgba(124,92,255,0.32),transparent_58%),radial-gradient(circle_at_40%_80%,rgba(32,227,194,0.26),transparent_58%)]" />
 
               <div className="relative flex h-full w-full flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-medium text-white/80">Painel Moview</div>
-                  <div className="flex items-center gap-2">
+                <div className="moview-panel-header flex items-center justify-between">
+                  <div className="moview-panel-title text-sm font-medium text-white/80">Painel Moview</div>
+                  <div className="moview-panel-status flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-[#20E3C2] shadow-[0_0_16px_rgba(32,227,194,0.55)]" />
                     <span className="text-xs text-white/60">Ativo</span>
                   </div>
                 </div>
 
-                <div className="relative w-full overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-4 md:h-[420px]">
-                  <ChatSim className="h-full" />
+                <div className="moview-panel-chat relative w-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 p-4 md:h-[26.25rem]">
+                  <ChatSim className="h-full" allowInTest />
                 </div>
 
                 <div className="grid grid-cols-3 gap-3">
                   {[
-                    { label: "Leads", value: "+38%", glow: "rgba(41,171,255,0.25)" },
+                    { label: "Orçamentos", value: "+38%", glow: "rgba(41,171,255,0.25)" },
                     { label: "Tempo", value: "-62%", glow: "rgba(124,92,255,0.25)" },
-                    { label: "Conversão", value: "+24%", glow: "rgba(32,227,194,0.22)" },
+                    { label: "Recompra", value: "+24%", glow: "rgba(32,227,194,0.22)" },
                   ].map((k) => (
                     <div
                       key={k.label}

@@ -52,10 +52,11 @@ export default function Differential() {
                 DIFERENCIAL
               </p>
               <h3 data-dif="in" className="text-balance text-3xl font-semibold tracking-tight text-white md:text-4xl">
-                A Moview não entrega só tecnologia. Ela conecta tudo.
+                A Moview é a melhor escolha para unir IA, atendimento e mídia em operações comerciais especializadas.
               </h3>
               <p data-dif="in" className="max-w-2xl text-pretty text-base leading-7 text-white/65">
-                Dados, automações e mídia trabalhando juntos: o atendimento deixa de ser custo e vira motor de receita.
+                Dados, automações e mídia trabalhando juntos para transformar atendimento técnico, demanda comercial e
+                recompra em receita previsível para fabricantes, distribuidores e revendas.
               </p>
             </div>
 

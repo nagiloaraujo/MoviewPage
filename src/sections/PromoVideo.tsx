@@ -11,22 +11,21 @@ export default function PromoVideo() {
   const [src, setSrc] = useState<string | null>(null);
   const [videoOk, setVideoOk] = useState(true);
   const [showHint, setShowHint] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [shouldAvoidHeavyMedia, setShouldAvoidHeavyMedia] = useState(false);
 
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
-
-  const shouldAvoidHeavyMedia = useMemo(() => {
-    if (typeof window === "undefined") return false;
+  useEffect(() => {
     type NavigatorWithConnection = Navigator & {
       connection?: { saveData?: boolean; effectiveType?: string };
     };
+
     const conn = (navigator as NavigatorWithConnection).connection;
     const saveData = !!conn?.saveData;
     const effectiveType = (conn?.effectiveType ?? "").toLowerCase();
     const slow = effectiveType === "slow-2g" || effectiveType === "2g";
-    return saveData || slow;
+
+    setPrefersReducedMotion(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false);
+    setShouldAvoidHeavyMedia(saveData || slow);
   }, []);
 
   useEffect(() => {
@@ -183,6 +182,7 @@ export default function PromoVideo() {
               playsInline
               preload="none"
               onError={() => setVideoOk(false)}
+              suppressHydrationWarning
               className="absolute inset-0 h-full w-full object-cover"
               src={src ?? undefined}
               poster="/promo-fallback.svg"

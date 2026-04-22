@@ -91,3 +91,353 @@ body {
   width: 0px;
   height: 0px;
 }
+
+.moview-panel,
+.moview-panel-chat,
+.moview-visual-chat {
+  max-width: 100%;
+}
+
+.moview-panel-header,
+.moview-chat-header {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.moview-panel-title,
+.moview-chat-headerTitle,
+.moview-chat-headerStatus {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.moview-chat-bubble {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.moview-chat-viewport {
+  display: flex;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.moview-nav-shell {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.moview-nav-indicator {
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  left: 0;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, rgba(41, 171, 255, 0.2), rgba(124, 92, 255, 0.2), rgba(32, 227, 194, 0.14));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.24),
+    0 0 24px rgba(41, 171, 255, 0.16);
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease;
+}
+
+.moview-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.moview-nav-link:hover,
+.moview-nav-link:focus-visible {
+  color: rgba(255, 255, 255, 1);
+  transform: translateY(-0.5px);
+}
+
+.moview-solution-card {
+  min-height: 18.5rem;
+  padding: 1.5rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 20px 50px rgba(0, 0, 0, 0.16);
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms ease;
+}
+
+.moview-solution-card-media,
+.moview-solution-card-veil,
+.moview-solution-card-content,
+.moview-solution-card-hover {
+  transition:
+    opacity 420ms ease,
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 420ms ease;
+}
+
+.moview-solution-card-media {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.06);
+  overflow: hidden;
+}
+
+.moview-solution-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.02);
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.moview-solution-card-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 15, 28, 0.1), rgba(10, 15, 28, 0.48) 58%, rgba(10, 15, 28, 0.78)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+  opacity: 0.94;
+}
+
+.moview-solution-card-main {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.moview-solution-card-content {
+  z-index: 1;
+}
+
+.moview-solution-card-hover {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  opacity: 0;
+  text-align: center;
+  transform: translateY(1.25rem);
+}
+
+.moview-solution-card-hover .moview-solution-card-meta {
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  color: rgba(234, 242, 255, 0.72);
+}
+
+.moview-solution-card:hover .moview-solution-card-media,
+.moview-solution-card:focus-within .moview-solution-card-media {
+  opacity: 1;
+  transform: scale(1);
+  filter: saturate(1.04) brightness(1.02);
+}
+
+.moview-solution-card:hover,
+.moview-solution-card:focus-within {
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.2);
+}
+
+.moview-solution-card:hover .moview-solution-card-image,
+.moview-solution-card:focus-within .moview-solution-card-image {
+  transform: scale(1);
+}
+
+.moview-solution-card:hover .moview-solution-card-veil,
+.moview-solution-card:focus-within .moview-solution-card-veil {
+  opacity: 0.52;
+}
+
+.moview-solution-card:hover .moview-solution-card-main,
+.moview-solution-card:focus-within .moview-solution-card-main {
+  opacity: 0;
+  transform: translateY(1.2rem);
+  pointer-events: none;
+}
+
+.moview-solution-card:hover .moview-solution-card-hover,
+.moview-solution-card:focus-within .moview-solution-card-hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes moview-brand-marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(-50% - 0.875rem), 0, 0);
+  }
+}
+
+@keyframes moview-brand-marquee-right {
+  0% {
+    transform: translate3d(calc(-50% - 0.875rem), 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.moview-brand-marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0, black 8%, black 92%, transparent 100%);
+}
+
+.moview-brand-track {
+  display: flex;
+  width: max-content;
+  gap: 1.75rem;
+  will-change: transform;
+}
+
+.moview-brand-track--left {
+  animation: moview-brand-marquee-left 28s linear infinite;
+}
+
+.moview-brand-track--right {
+  animation: moview-brand-marquee-right 30s linear infinite;
+}
+
+.moview-brand-card {
+  display: flex;
+  height: 6.875rem;
+  width: 15rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(235, 241, 244, 0.92);
+  background: #ebf1f4;
+  backdrop-filter: blur(16px);
+}
+
+.moview-brand-image {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+  opacity: 1;
+  transition:
+    transform 240ms ease,
+    opacity 240ms ease,
+    filter 240ms ease;
+}
+
+.moview-brand-card:hover .moview-brand-image {
+  transform: scale(1.015);
+  opacity: 1;
+  filter: brightness(1.01) contrast(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moview-brand-track--left,
+  .moview-brand-track--right {
+    animation: none;
+  }
+}
+
+/* Mobile safeguard: lock the panel and let only the inner chat viewport scroll. */
+@media (max-width: 768px) {
+  .moview-panel {
+    height: clamp(39rem, 92svh, 43rem);
+    min-height: clamp(39rem, 92svh, 43rem);
+    max-height: clamp(39rem, 92svh, 43rem);
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .moview-panel-chat {
+    height: clamp(31.5rem, 82svh, 36rem);
+    min-height: clamp(31.5rem, 82svh, 36rem);
+    max-height: clamp(31.5rem, 82svh, 36rem);
+    flex: 1 1 auto;
+    overflow: hidden;
+    padding: 1rem;
+  }
+
+  .moview-panel-header,
+  .moview-chat-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .moview-panel-status,
+  .moview-chat-headerStatus {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .moview-chat-viewport {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .moview-brand-card {
+    height: 5.9375rem;
+    width: 13.125rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .moview-panel {
+    height: 41rem;
+    min-height: 41rem;
+    max-height: 41rem;
+    padding: 1rem;
+  }
+
+  .moview-panel-chat {
+    height: 33.75rem;
+    min-height: 33.75rem;
+    max-height: 33.75rem;
+    padding: 0.875rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .moview-panel {
+    height: 39rem;
+    min-height: 39rem;
+    max-height: 39rem;
+    padding: 0.875rem;
+  }
+
+  .moview-panel-chat {
+    height: 31.5rem;
+    min-height: 31.5rem;
+    max-height: 31.5rem;
+    padding: 0.75rem;
+  }
+
+  .moview-chat-bubble {
+    font-size: 0.8125rem;
+  }
+
+  .moview-brand-card {
+    width: 11.875rem;
+  }
+}

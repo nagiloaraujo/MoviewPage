@@ -10,21 +10,19 @@ export default function VisualProof() {
   const chartPathRef = useRef<SVGPathElement | null>(null);
   const rafRef = useRef(0);
   const gradId = useId().replace(/:/g, "");
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
-  const supportsIO = typeof window !== "undefined" && typeof IntersectionObserver !== "undefined";
-  const supportsRAF = typeof window !== "undefined" && typeof window.requestAnimationFrame === "function";
-  const fallbackStatic = prefersReducedMotion || !supportsIO || !supportsRAF;
+  const [isMounted, setIsMounted] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [supportsIO, setSupportsIO] = useState(true);
+  const [supportsRAF, setSupportsRAF] = useState(true);
+  const fallbackStatic = isMounted && (prefersReducedMotion || !supportsIO || !supportsRAF);
 
   const all = useMemo<Msg[]>(
     () => [
-      { from: "user", text: "Oi! Vocês têm atendimento 24h?" },
-      { from: "ia", text: "Sim. Posso te ajudar agora: qual seu segmento e volume de mensagens/dia?" },
-      { from: "user", text: "Clínica. Recebemos muitas dúvidas e agendamentos." },
-      { from: "ia", text: "Perfeito. Posso automatizar triagem, agendamento e follow-up com integração no seu sistema." },
-      { from: "ia", text: "Quer começar com WhatsApp + site e expandir depois?" },
+      { from: "user", text: "Oi! Somos uma distribuidora especializada. Vocês atendem 24h?" },
+      { from: "ia", text: "Sim. Posso automatizar triagem, catálogo, orçamento e repasse comercial nos seus canais." },
+      { from: "user", text: "Tem como organizar dúvidas técnicas e pedidos no WhatsApp?" },
+      { from: "ia", text: "Tem. A IA responde, qualifica e encaminha o próximo passo com contexto para a equipe." },
+      { from: "ia", text: "Quer começar com WhatsApp + site e expandir depois para mídia e CRM?" },
     ],
     [],
   );
@@ -38,6 +36,24 @@ export default function VisualProof() {
   const [dashboardProgress, setDashboardProgress] = useState(fallbackStatic ? 1 : 0);
   const [chartProgress, setChartProgress] = useState(fallbackStatic ? 1 : 0);
   const [pathLength, setPathLength] = useState(360);
+
+  useEffect(() => {
+    setIsMounted(true);
+    setPrefersReducedMotion(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false);
+    setSupportsIO(typeof IntersectionObserver !== "undefined");
+    setSupportsRAF(typeof window.requestAnimationFrame === "function");
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    if (!fallbackStatic) return;
+
+    setCount(all.length);
+    setDashboardInView(true);
+    setChartInView(true);
+    setDashboardProgress(1);
+    setChartProgress(1);
+  }, [all.length, fallbackStatic, isMounted]);
 
   useEffect(() => {
     if (prefersReducedMotion) return;
@@ -131,7 +147,7 @@ export default function VisualProof() {
   const metrics = useMemo(
     () => [
       { label: "Resposta", suffix: "s", target: 6, width: 82, color: "#29ABFF" },
-      { label: "Agendamentos", prefix: "+", suffix: "%", target: 19, width: 66, color: "#20E3C2" },
+      { label: "Orçamentos", prefix: "+", suffix: "%", target: 19, width: 66, color: "#20E3C2" },
       { label: "ROI", suffix: "x", target: 3.4, width: 74, color: "#7C5CFF" },
     ],
     [],
@@ -139,7 +155,7 @@ export default function VisualProof() {
 
   const metricText = (label: string, value: number) => {
     if (label === "ROI") return `${value.toFixed(1)}x`;
-    if (label === "Agendamentos") return `+${Math.round(value)}%`;
+    if (label === "Orçamentos") return `+${Math.round(value)}%`;
     return `${Math.round(value)}s`;
   };
 
@@ -162,18 +178,19 @@ export default function VisualProof() {
           <div className="grid gap-4">
             <p className="text-xs tracking-[0.28em] text-white/55">PROVA VISUAL</p>
             <h3 className="text-balance text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              Atendimento automático + visão clara de resultados
+              Atendimento automático + visão clara de resultado
             </h3>
             <p className="max-w-xl text-pretty text-base leading-7 text-white/65">
-              Uma experiência que parece viva: mensagens surgem, métricas reagem e o funil se move sem esforço.
+              Uma experiência que mostra a proposta da Moview: mensagens surgem, métricas reagem e o funil comercial
+              se move sem esforço.
             </p>
           </div>
 
           <div className="relative grid gap-4">
-            <div className="grid gap-3 rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
-              <div className="flex items-center justify-between">
-                <div className="text-sm font-medium text-white/85">Chat automático</div>
-                <div className="text-xs text-white/55">online</div>
+            <div className="moview-visual-chat grid gap-3 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+              <div className="moview-panel-header flex items-center justify-between">
+                <div className="moview-panel-title text-sm font-medium text-white/85">Chat automático</div>
+                <div className="moview-panel-status text-xs text-white/55">online</div>
               </div>
 
               <div className="grid gap-2">
@@ -181,7 +198,7 @@ export default function VisualProof() {
                   <div
                     key={i}
                     className={[
-                      "max-w-[92%] rounded-2xl border border-white/10 px-3 py-2 text-sm text-white/85 transition-opacity",
+                      "moview-chat-bubble max-w-[92%] rounded-2xl border border-white/10 px-3 py-2 text-left text-sm text-white/85 transition-opacity",
                       m.from === "ia" ? "bg-black/20" : "ml-auto bg-white/5",
                     ].join(" ")}
                     style={{ opacity: 1 }}
@@ -194,7 +211,7 @@ export default function VisualProof() {
 
             <div
               ref={dashboardRef}
-              className="grid gap-3 rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
+              className="grid gap-3 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
             >
               <div className="flex items-center justify-between">
                 <div className="text-sm font-medium text-white/85">Dashboard</div>

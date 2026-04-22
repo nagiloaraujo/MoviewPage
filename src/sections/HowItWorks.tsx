@@ -13,25 +13,25 @@ import {
 const steps = [
   {
     title: "Atrai",
-    desc: "Mídia inteligente e conteúdos que chamam atenção no canal certo.",
+    desc: "Mídia e conteúdo para atrair revendas, distribuidores, representantes e demandas qualificadas.",
     accent: "rgba(41,171,255,0.35)",
     icon: MegaphoneIcon,
   },
   {
     title: "Engaja",
-    desc: "Conversas guiadas com contexto e personalização em tempo real.",
+    desc: "Conversas guiadas sobre linhas, aplicações, disponibilidade e próximo passo comercial.",
     accent: "rgba(124,92,255,0.35)",
     icon: ChatBubbleOvalLeftEllipsisIcon,
   },
   {
     title: "Atende",
-    desc: "IA responde rápido, qualifica e resolve, sem fricção.",
+    desc: "IA responde rápido, qualifica orçamento e organiza atendimento técnico sem fricção.",
     accent: "rgba(32,227,194,0.30)",
     icon: CpuChipIcon,
   },
   {
     title: "Converte",
-    desc: "Vendas com automação, follow-ups e integração com seu CRM.",
+    desc: "Pedidos, follow-ups, recompra e CRM trabalhando com mais previsibilidade.",
     accent: "rgba(162,62,255,0.28)",
     icon: ArrowTrendingUpIcon,
   },
@@ -92,11 +92,11 @@ export default function HowItWorks() {
           <div className="relative flex flex-col gap-4">
             <p className="text-xs tracking-[0.28em] text-white/55">COMO FUNCIONA</p>
             <h2 className="text-balance text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              Um fluxo contínuo, do primeiro toque à conversão
+              Um fluxo contínuo para operações comerciais técnicas, do primeiro toque à recompra
             </h2>
             <p className="max-w-3xl text-pretty text-base leading-7 text-white/65">
-              Atrai → Engaja → Atende → Converte. Tudo conectado e mensurável, com automações que evoluem conforme seus
-              dados.
+              Atrai → Engaja → Atende → Converte. Tudo conectado para fabricantes, distribuidores e revendas, com
+              automações que evoluem conforme seus dados.
             </p>
           </div>
 

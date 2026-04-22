@@ -1,16 +1,19 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const port = process.env.PW_PORT ?? "3000";
+const baseURL = process.env.PW_BASE_URL ?? `http://localhost:${port}`;
+
 export default defineConfig({
   testDir: "./e2e",
   reporter: [["html", { open: "never" }]],
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL,
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "npm run dev -- --port 3000",
-    url: "http://localhost:3000",
+    command: `npm run dev -- --port ${port}`,
+    url: baseURL,
     reuseExistingServer: true,
     timeout: 120_000,
   },
@@ -35,6 +38,9 @@ export default defineConfig({
       name: "chromium-mobile",
       use: { ...devices["iPhone 13"] },
     },
+    {
+      name: "chromium-android",
+      use: { ...devices["Pixel 5"] },
+    },
   ],
 });
-

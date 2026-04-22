@@ -3,6 +3,7 @@ import NarrativeShift from "@/sections/NarrativeShift";
 import Products from "@/sections/Products";
 import HowItWorks from "@/sections/HowItWorks";
 import Differential from "@/sections/Differential";
+import TrustedBrands from "@/sections/TrustedBrands";
 import VisualProof from "@/sections/VisualProof";
 import RotatingSlogans from "@/sections/RotatingSlogans";
 import Values from "@/sections/Values";
@@ -18,6 +19,7 @@ export default function Home() {
       <Products />
       <HowItWorks />
       <Differential />
+      <TrustedBrands />
       <VisualProof />
       <RotatingSlogans />
       <Values />

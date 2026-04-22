@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Moview — IA que movimenta resultados",
+  title: "Moview — IA, automação e mídia para operações especializadas",
   description:
-    "A Moview transforma atendimento em resultado usando inteligência artificial, automação e mídia digital integrada.",
+    "A Moview conecta atendimento, comercial e mídia com IA para fabricantes, distribuidores e revendas especializadas.",
 };
 
 export default function RootLayout({
