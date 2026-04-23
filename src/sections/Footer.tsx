@@ -58,19 +58,19 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
             <div className="grid content-start gap-3">
               <div className="text-xs font-semibold tracking-[0.18em] text-white/70">Soluções</div>
-              <a className="text-sm text-white/55 transition hover:text-white" href="#solucoes">
+              <a className="text-sm text-white/55 transition hover:text-white" href="/#solucoes">
                 Automação com IA
               </a>
-              <a className="text-sm text-white/55 transition hover:text-white" href="#solucoes">
+              <a className="text-sm text-white/55 transition hover:text-white" href="/#solucoes">
                 Integrações Multicanal
               </a>
-              <a className="text-sm text-white/55 transition hover:text-white" href="#solucoes">
+              <a className="text-sm text-white/55 transition hover:text-white" href="/#solucoes">
                 IA para Vendas
               </a>
-              <a className="text-sm text-white/55 transition hover:text-white" href="#solucoes">
+              <a className="text-sm text-white/55 transition hover:text-white" href="/#solucoes">
                 Mídia Inteligente
               </a>
-              <a className="text-sm text-white/55 transition hover:text-white" href="#solucoes">
+              <a className="text-sm text-white/55 transition hover:text-white" href="/#solucoes">
                 Produção de Conteúdo
               </a>
             </div>
@@ -82,12 +82,6 @@ export default function Footer() {
               </a>
               <a className="text-sm text-white/55 transition hover:text-white" href="#">
                 Mercado especializado
-              </a>
-              <a className="text-sm text-white/55 transition hover:text-white" href="#">
-                Blog
-              </a>
-              <a className="text-sm text-white/55 transition hover:text-white" href="#">
-                Carreiras
               </a>
             </div>
 
@@ -102,7 +96,7 @@ export default function Footer() {
               <a className="text-sm text-white/55 transition hover:text-white" href="#">
                 Status
               </a>
-              <a className="text-sm text-white/55 transition hover:text-white" href="#contato">
+              <a className="text-sm text-white/55 transition hover:text-white" href="/#contato">
                 Contato
               </a>
             </div>
@@ -113,10 +107,10 @@ export default function Footer() {
         <div className="mt-6 flex flex-col gap-3 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
           <div>© {new Date().getFullYear()} Moview. Todos os direitos reservados.</div>
           <div className="flex items-center gap-5">
-            <a className="transition hover:text-white" href="#">
+            <a className="transition hover:text-white" href="/politica-de-privacidade">
               Política de privacidade
             </a>
-            <a className="transition hover:text-white" href="#">
+            <a className="transition hover:text-white" href="/termos-de-uso">
               Termos de uso
             </a>
           </div>

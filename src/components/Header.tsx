@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import MoviewLogo from "./MoviewLogo";
 import { useLenis } from "./SmoothScroll";
 import { moviewWhatsAppHref } from "@/lib/whatsapp";
@@ -11,6 +12,8 @@ function cx(...classes: Array<string | false | null | undefined>) {
 
 export default function Header() {
   const lenis = useLenis();
+  const router = useRouter();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
@@ -49,6 +52,11 @@ export default function Header() {
   };
 
   const goTo = (href: string) => {
+    if (pathname !== "/") {
+      router.push(`/${href}`);
+      return;
+    }
+
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (!el) return;

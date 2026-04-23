@@ -5,6 +5,7 @@ import BackgroundFX from "@/components/BackgroundFX";
 import FloatingDecor from "@/components/FloatingDecor";
 import Header from "@/components/Header";
 import SmoothScroll from "@/components/SmoothScroll";
+import Footer from "@/sections/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
         <SmoothScroll>
           <Header />
           {children}
+          <Footer />
         </SmoothScroll>
       </body>
     </html>

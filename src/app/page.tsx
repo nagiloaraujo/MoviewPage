@@ -9,7 +9,6 @@ import RotatingSlogans from "@/sections/RotatingSlogans";
 import Values from "@/sections/Values";
 import PromoVideo from "@/sections/PromoVideo";
 import FinalCTA from "@/sections/FinalCTA";
-import Footer from "@/sections/Footer";
 
 export default function Home() {
   return (
@@ -25,7 +24,6 @@ export default function Home() {
       <Values />
       <PromoVideo />
       <FinalCTA />
-      <Footer />
     </main>
   );
 }
