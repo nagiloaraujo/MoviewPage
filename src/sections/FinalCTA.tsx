@@ -45,7 +45,7 @@ export default function FinalCTA() {
                 CTA FINAL
               </p>
               <h3 data-cta="in" className="text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                Pronto para transformar sua operação em uma maquina de atendimento e demanda?
+                Pronto para transformar sua operação em uma máquina de atendimento e demanda?
               </h3>
               <p data-cta="in" className="max-w-2xl text-pretty text-base leading-7 text-white/65">
                 Comece com um diagnóstico rápido para identificar onde IA, automação e mídia podem acelerar orçamento,

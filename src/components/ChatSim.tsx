@@ -22,11 +22,11 @@ function TypingIndicator() {
     <div className="flex items-center gap-2">
       <span className="text-[0.8125rem] font-medium tracking-[0.08em] text-white/72">digitando</span>
       <span className="inline-flex items-center gap-1">
-        <span className="h-1.5 w-1.5 rounded-full bg-white/55 animate-[moview-dot_1.1s_infinite]" />
-        <span className="h-1.5 w-1.5 rounded-full bg-white/55 animate-[moview-dot_1.1s_0.18s_infinite]" />
-        <span className="h-1.5 w-1.5 rounded-full bg-white/55 animate-[moview-dot_1.1s_0.36s_infinite]" />
+        <span className="h-1.5 w-1.5 rounded-full bg-white/55 animate-[moview-dot_2.6s_ease-in-out_infinite]" />
+        <span className="h-1.5 w-1.5 rounded-full bg-white/55 animate-[moview-dot_2.6s_ease-in-out_0.45s_infinite]" />
+        <span className="h-1.5 w-1.5 rounded-full bg-white/55 animate-[moview-dot_2.6s_ease-in-out_0.9s_infinite]" />
       </span>
-      <span className="h-3 w-px bg-white/60 animate-[moview-cursor_0.95s_steps(1)_infinite]" />
+      <span className="h-3 w-px bg-white/60 animate-[moview-cursor_3s_steps(1)_infinite]" />
     </div>
   );
 }
@@ -77,7 +77,11 @@ export default function ChatSim({
   const [status, setStatus] = useState<"online" | "typing">("online");
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
-  const stickToBottomRef = useRef(true);
+  const messagesLenRef = useRef(0);
+
+  useEffect(() => {
+    messagesLenRef.current = messages.length;
+  }, [messages.length]);
 
   useEffect(() => {
     setPrefersReducedMotion(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false);
@@ -87,12 +91,22 @@ export default function ChatSim({
     const el = viewportRef.current;
     if (!el) return;
 
-    if (!stickToBottomRef.current) return;
-
     // Keep the latest exchange visible without letting the outer panel grow.
     const top = el.scrollHeight;
     el.scrollTo({ top, behavior: prefersReducedMotion ? "auto" : "smooth" });
   }, [messages.length, prefersReducedMotion, typing]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    setTyping(true);
+    setStatus("typing");
+    const timeout = window.setTimeout(() => {
+      setTyping((prev) => (messagesLenRef.current <= 1 && prev ? false : prev));
+      setStatus((prev) => (messagesLenRef.current <= 1 && prev === "typing" ? "online" : prev));
+    }, 5000);
+
+    return () => window.clearTimeout(timeout);
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     if (!simulate) return;
@@ -101,25 +115,24 @@ export default function ChatSim({
     let cancelled = false;
 
     const run = async () => {
+      const fastTimings = process.env.NODE_ENV === "test" && allowInTest;
       let i = 0;
-      await sleep(allowInTest ? 150 : 1200);
+      await sleep(fastTimings ? 150 : 1400);
 
       while (!cancelled && (maxTurns == null || i < maxTurns)) {
         const pair = script[i % script.length];
 
-        await sleep(allowInTest ? 250 : rand(2400, 3400));
+        await sleep(fastTimings ? 250 : rand(3400, 4600));
         if (cancelled) return;
         setMessages((prev) => {
           const next = prev.concat({ id: `u-${Date.now()}-${i}`, from: "user", text: pair.q });
           return next.length > 10 ? next.slice(-10) : next;
         });
 
-        await sleep(allowInTest ? 180 : rand(900, 1350));
-        if (cancelled) return;
         setTyping(true);
         setStatus("typing");
 
-        await sleep(allowInTest ? 260 : rand(2200, 3200));
+        await sleep(fastTimings ? 260 : rand(3400, 4600));
         if (cancelled) return;
         setTyping(false);
         setStatus("online");
@@ -128,6 +141,8 @@ export default function ChatSim({
           return next.length > 10 ? next.slice(-10) : next;
         });
 
+        await sleep(fastTimings ? 180 : rand(3200, 4200));
+        if (cancelled) return;
         i += 1;
       }
     };
@@ -143,8 +158,8 @@ export default function ChatSim({
     <div
       key={`${keyPrefix}${m.id}`}
       className={[
-        "moview-chat-bubble max-w-[92%] rounded-2xl border border-white/10 px-3 py-2 text-left text-sm text-white/85 transition-all duration-[1100ms]",
-        !prefersReducedMotion ? "animate-[moview-pop_1.9s_cubic-bezier(0.22,1,0.36,1)]" : "",
+        "moview-chat-bubble max-w-[92%] rounded-2xl border border-white/10 px-3 py-2 text-left text-sm text-white/85 transition-all duration-[3200ms] ease-in-out",
+        !prefersReducedMotion ? "animate-[moview-pop_3.4s_ease-in-out]" : "",
         m.from === "ai" ? "bg-black/20" : "ml-auto bg-white/5 text-right",
       ].join(" ")}
     >
@@ -156,8 +171,8 @@ export default function ChatSim({
     <div
       key={key}
       className={[
-        "moview-chat-bubble max-w-[70%] rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-left text-sm text-white/85 transition-all duration-[1100ms]",
-        !prefersReducedMotion ? "animate-[moview-pop_1.9s_cubic-bezier(0.22,1,0.36,1)]" : "",
+        "moview-chat-bubble max-w-[70%] rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-left text-sm text-white/85 transition-all duration-[3200ms] ease-in-out",
+        !prefersReducedMotion ? "animate-[moview-pop_3.4s_ease-in-out]" : "",
       ].join(" ")}
     >
       <TypingIndicator />
@@ -190,16 +205,10 @@ export default function ChatSim({
       <div
         ref={viewportRef}
         className="moview-chat-viewport moview-hide-scrollbar mt-3 flex-1 overscroll-contain overflow-y-auto rounded-2xl border border-white/10 bg-black/20 px-3 py-3"
-        onScroll={() => {
-          const el = viewportRef.current;
-          if (!el) return;
-          const threshold = 28;
-          stickToBottomRef.current = el.scrollTop + el.clientHeight >= el.scrollHeight - threshold;
-        }}
         onWheelCapture={(e) => e.stopPropagation()}
         onTouchMoveCapture={(e) => e.stopPropagation()}
       >
-        <div className="grid gap-2">
+        <div className="flex min-h-full flex-col justify-end gap-2">
           {messages.map((m) => renderBubble(m))}
           {typing ? renderTypingBubble("desktop-typing") : null}
         </div>
