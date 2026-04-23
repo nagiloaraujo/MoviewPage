@@ -59,10 +59,10 @@ export default function FinalCTA() {
                 href={moviewWhatsAppHref}
                 target="_blank"
                 rel="noreferrer"
-                className="relative inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-medium text-white transition-transform hover:scale-[1.02] active:scale-[0.99]"
+                className="relative inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-center text-sm font-medium leading-snug text-white transition-transform hover:scale-[1.02] active:scale-[0.99] max-[385px]:min-h-11 max-[385px]:px-4 max-[385px]:py-2.5 max-[385px]:text-[13px]"
               >
-                <span className="absolute inset-0 rounded-full bg-[linear-gradient(90deg,rgba(41,171,255,0.38),rgba(124,92,255,0.34),rgba(32,227,194,0.28))] blur-md" />
-                <span className="absolute inset-0 rounded-full border border-white/15 bg-white/5" />
+                <span className="pointer-events-none absolute inset-0 rounded-full bg-[linear-gradient(90deg,rgba(41,171,255,0.38),rgba(124,92,255,0.34),rgba(32,227,194,0.28))] blur-md max-[385px]:blur-sm" />
+                <span className="pointer-events-none absolute inset-0 rounded-full border border-white/15 bg-white/5" />
                 <span className="relative">Quero falar com a Moview</span>
               </a>
               <a
@@ -70,7 +70,7 @@ export default function FinalCTA() {
                 href={moviewWhatsAppHref}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-black/20 px-6 text-sm font-medium text-white/85 transition hover:bg-black/30 hover:text-white"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 bg-black/20 px-6 py-3 text-center text-sm font-medium leading-snug text-white/85 transition hover:bg-black/30 hover:text-white max-[385px]:min-h-11 max-[385px]:px-4 max-[385px]:py-2.5 max-[385px]:text-[13px]"
               >
                 Falar com especialista
               </a>

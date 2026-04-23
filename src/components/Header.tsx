@@ -87,14 +87,14 @@ export default function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-6xl px-4 max-[385px]:px-3">
         <div
           className={cx(
             "mt-3 flex items-center justify-between rounded-2xl border border-white/10 backdrop-blur-xl transition-all",
             scrolled ? "h-14 bg-black/60 shadow-[0_12px_60px_rgba(0,0,0,0.55)]" : "h-16 bg-black/35",
           )}
         >
-          <div className="flex items-center gap-3 pl-4">
+          <div className="flex items-center gap-3 pl-4 max-[385px]:gap-2 max-[385px]:pl-3">
             <a
               href="#inicio"
               onClick={(e) => {
@@ -103,7 +103,7 @@ export default function Header() {
               }}
               className="flex items-center gap-3"
             >
-              <MoviewLogo className="flex items-center gap-3" />
+              <MoviewLogo className="flex items-center gap-3 max-[385px]:gap-2" />
             </a>
           </div>
 
@@ -141,16 +141,16 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 pr-3">
+          <div className="flex items-center gap-2 pr-3 max-[385px]:pr-2">
             <a
               href={moviewWhatsAppHref}
               target="_blank"
               rel="noreferrer"
-              className="relative inline-flex h-10 items-center justify-center rounded-full px-4 text-sm font-medium text-white shadow-[0_0_35px_rgba(41,171,255,0.12)] transition-transform hover:scale-[1.02] active:scale-[0.99]"
+              className="relative inline-flex h-10 items-center justify-center rounded-full px-4 text-sm font-medium text-white shadow-[0_0_35px_rgba(41,171,255,0.12)] transition-transform hover:scale-[1.02] active:scale-[0.99] max-[385px]:h-9 max-[385px]:px-3 max-[385px]:text-xs"
             >
-              <span className="absolute inset-0 rounded-full bg-[linear-gradient(90deg,rgba(41,171,255,0.20),rgba(124,92,255,0.20),rgba(32,227,194,0.18))] blur-md" />
-              <span className="absolute inset-0 rounded-full border border-white/15 bg-white/5" />
-              <span className="relative">Falar com especialista</span>
+              <span className="pointer-events-none absolute inset-0 rounded-full bg-[linear-gradient(90deg,rgba(41,171,255,0.20),rgba(124,92,255,0.20),rgba(32,227,194,0.18))] blur-md max-[385px]:blur-sm" />
+              <span className="pointer-events-none absolute inset-0 rounded-full border border-white/15 bg-white/5" />
+              <span className="relative whitespace-nowrap">Falar com especialista</span>
             </a>
           </div>
         </div>
