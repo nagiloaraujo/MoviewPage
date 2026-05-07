@@ -2,13 +2,17 @@
   "name": "moview",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
     "dev": "next dev",
     "dev:staging": "dotenv -e .env.staging -- next dev",
     "build": "next build",
     "build:staging": "dotenv -e .env.staging -- next build",
     "images:process": "node scripts/process-project-images.mjs",
-    "start": "next start",
+    "postinstall": "next build",
+    "start": "node server.js",
     "start:staging": "dotenv -e .env.staging -- next start",
     "lint": "eslint",
     "test": "jest",
