@@ -53,7 +53,10 @@ export default function Header() {
 
   const goTo = (href: string) => {
     if (pathname !== "/") {
-      router.push(`/${href}`);
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem("moview:scroll-target", href);
+      }
+      router.push("/");
       return;
     }
 
