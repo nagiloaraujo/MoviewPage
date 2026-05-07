@@ -94,7 +94,7 @@ export default function ChatSim({
 
     // Keep the latest exchange visible without letting the outer panel grow.
     const top = el.scrollHeight;
-    el.scrollTo({ top, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    el.scrollTo({ top, behavior: "auto" });
   }, [messages.length, prefersReducedMotion, typing]);
 
   useEffect(() => {
@@ -211,8 +211,8 @@ export default function ChatSim({
           if (!el) return;
           if (el.scrollHeight <= el.clientHeight) return;
 
-          const atTop = el.scrollTop <= 0;
-          const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+          const atTop = el.scrollTop <= 1;
+          const atBottom = el.scrollHeight - el.clientHeight - el.scrollTop <= 4;
           const deltaY = e.deltaY;
 
           const scrollingUpInside = deltaY < 0 && !atTop;
@@ -235,8 +235,8 @@ export default function ChatSim({
           const delta = startY - currentY;
           if (Math.abs(delta) < 2) return;
 
-          const atTop = el.scrollTop <= 0;
-          const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+          const atTop = el.scrollTop <= 1;
+          const atBottom = el.scrollHeight - el.clientHeight - el.scrollTop <= 4;
 
           const scrollingDownInside = delta > 0 && !atBottom;
           const scrollingUpInside = delta < 0 && !atTop;
