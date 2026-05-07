@@ -3,7 +3,7 @@ import MoviewLogo from "@/components/MoviewLogo";
 
 export default function Footer() {
   return (
-    <footer className="relative mt-20 border-t border-white/10 pb-12 pt-14">
+    <footer className="relative z-20 mt-20 border-t border-white/10 pb-12 pt-14">
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid gap-12 md:grid-cols-[1.15fr_0.85fr]">
           <div className="grid gap-5">
@@ -109,6 +109,9 @@ export default function Footer() {
           <div className="flex items-center gap-5">
             <a className="transition hover:text-white" href="/politica-de-privacidade">
               Política de privacidade
+            </a>
+            <a className="transition hover:text-white" href="/termo-de-exclusao-de-dados">
+              Termo de exclusão de dados
             </a>
             <a className="transition hover:text-white" href="/termos-de-uso">
               Termos de uso

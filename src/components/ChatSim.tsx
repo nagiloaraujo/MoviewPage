@@ -77,6 +77,7 @@ export default function ChatSim({
   const [status, setStatus] = useState<"online" | "typing">("online");
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
   const messagesLenRef = useRef(0);
 
   useEffect(() => {
@@ -204,9 +205,44 @@ export default function ChatSim({
 
       <div
         ref={viewportRef}
-        className="moview-chat-viewport moview-hide-scrollbar mt-3 flex-1 overscroll-contain overflow-y-auto rounded-2xl border border-white/10 bg-black/20 px-3 py-3"
-        onWheelCapture={(e) => e.stopPropagation()}
-        onTouchMoveCapture={(e) => e.stopPropagation()}
+        className="moview-chat-viewport moview-hide-scrollbar mt-3 flex-1 overscroll-auto overflow-y-auto rounded-2xl border border-white/10 bg-black/20 px-3 py-3"
+        onWheelCapture={(e) => {
+          const el = viewportRef.current;
+          if (!el) return;
+          if (el.scrollHeight <= el.clientHeight) return;
+
+          const atTop = el.scrollTop <= 0;
+          const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+          const deltaY = e.deltaY;
+
+          const scrollingUpInside = deltaY < 0 && !atTop;
+          const scrollingDownInside = deltaY > 0 && !atBottom;
+
+          if (scrollingUpInside || scrollingDownInside) e.stopPropagation();
+        }}
+        onTouchStartCapture={(e) => {
+          touchStartYRef.current = e.touches[0]?.clientY ?? null;
+        }}
+        onTouchMoveCapture={(e) => {
+          const el = viewportRef.current;
+          if (!el) return;
+          if (el.scrollHeight <= el.clientHeight) return;
+
+          const startY = touchStartYRef.current;
+          const currentY = e.touches[0]?.clientY ?? null;
+          if (startY == null || currentY == null) return;
+
+          const delta = startY - currentY;
+          if (Math.abs(delta) < 2) return;
+
+          const atTop = el.scrollTop <= 0;
+          const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+
+          const scrollingDownInside = delta > 0 && !atBottom;
+          const scrollingUpInside = delta < 0 && !atTop;
+
+          if (scrollingUpInside || scrollingDownInside) e.stopPropagation();
+        }}
       >
         <div className="flex min-h-full flex-col justify-end gap-2">
           {messages.map((m) => renderBubble(m))}
